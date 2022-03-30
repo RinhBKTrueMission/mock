@@ -10,12 +10,9 @@ import com.example.demo.model.Utils;
 import com.example.demo.reponsitory.OrderDetailRepository;
 import com.example.demo.reponsitory.OrderRepository;
 import com.example.demo.reponsitory.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +39,7 @@ private final OrderDetailRepository orderDetailRepository;
             return new ResponseEntity<>(HttpStatus.OK);
         }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
 
     @RequestMapping("/buy_product/{id}/{sl}")
     public ResponseEntity<?> listProductHandle(HttpServletRequest request, @PathVariable String id,@PathVariable int sl){
