@@ -1,26 +1,35 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Product;
+import com.example.demo.entity.User;
 import com.example.demo.reponsitory.ProductRepository;
+import com.example.demo.reponsitory.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import com.example.demo.entity.Product;
+
 @RestController
 @RequestMapping(value = "api/manager")
 public class ManagerController {
     private final ProductRepository repo;
+    private final UserRepository repo1;
 
-    public ManagerController(ProductRepository repo) {
+    public ManagerController(ProductRepository repo, UserRepository repo1) {
         this.repo = repo;
+        this.repo1 = repo1;
     }
     @PreAuthorize("hasRole('MODERATOR')")
     @PostMapping(value = "/setInfo")
     public ResponseEntity<Product> setInfo(@RequestBody Product  product){
         return new ResponseEntity<>(repo.save(product), HttpStatus.OK);
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/getInfoAccount")
+    public ResponseEntity<Iterable<User>>  setInfoAccount(){
+        return new ResponseEntity<>(repo1.findAll(), HttpStatus.OK);
     }
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping(value = "update/{id}")
