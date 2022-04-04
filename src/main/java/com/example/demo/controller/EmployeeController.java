@@ -94,7 +94,6 @@ private final OrderDetailRepository orderDetailRepository;
     @GetMapping(value = "shoppingCartConfirm")
     public String showCart(HttpServletRequest request){
         CartInfo cartInfo = Utils.getCartInSession(request);
-
         return cartInfo.toString();
     }
     @PostMapping(value = "shoppingCartConfirm")
